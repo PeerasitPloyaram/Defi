@@ -153,10 +153,6 @@ contract LiquidationOperator is IUniswapV2Callee {
 
     // END TODO
 
-    // some helper function, it is totally fine if you can finish the lab without using these function
-    // https://github.com/Uniswap/v2-periphery/blob/master/contracts/libraries/UniswapV2Library.sol
-    // given an input amount of an asset and pair reserves, returns the maximum output amount of the other asset
-    // safe mul is not necessary since https://docs.soliditylang.org/en/v0.8.9/080-breaking-changes.html
     function getAmountOut(
         uint256 amountIn,
         uint256 reserveIn,
@@ -239,6 +235,7 @@ contract LiquidationOperator is IUniswapV2Callee {
         // we should borrow USDT, liquidate the target user and get the WBTC, then swap WBTC to repay uniswap
         // (please feel free to develop other workflows as long as they liquidate the target user successfully)
 
+        // --------------- Runner Code ------------------
         uniswapV2Pair_WBTC_USDT.swap(0, debt_USDT, address(this), "$");
 
         // 3. Convert the profit into ETH and send back to sender
@@ -272,11 +269,11 @@ contract LiquidationOperator is IUniswapV2Callee {
         // 2.2 repay WBTC
         uint repay_WBTC = getAmountIn(debtToCover, reserve_WBTC_Pool1, reserve_USDT_Pool1);
         WBTC.transfer(address(uniswapV2Pair_WBTC_USDT), repay_WBTC);
-        collateral_WBTC -= repay_WBTC;
+        collateral_WBTC -= repay_WBTC; // sub for split to profit and pay
 
         // 2.3 swap remain WBTC to WETH
         WBTC.transfer(address(uniswapV2Pair_WBTC_WETH), collateral_WBTC);
         uint amountOut_WETH = getAmountOut(collateral_WBTC, reserve_WBTC_Pool2, reserve_WETH_Pool2);
-        uniswapV2Pair_WBTC_WETH.swap(0, amountOut_WETH, address(this), "");
+        uniswapV2Pair_WBTC_WETH.swap(0, amountOut_WETH, address(this), ""); // pay back flash loan
     }
 }
