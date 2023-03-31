@@ -268,12 +268,12 @@ contract LiquidationOperator is IUniswapV2Callee {
 
         // 2.2 repay WBTC
         uint repay_WBTC = getAmountIn(debtToCover, reserve_WBTC_Pool1, reserve_USDT_Pool1);
-        WBTC.transfer(address(uniswapV2Pair_WBTC_USDT), repay_WBTC);
+        WBTC.transfer(address(uniswapV2Pair_WBTC_USDT), repay_WBTC);// pay back flash loan
         collateral_WBTC -= repay_WBTC; // sub for split to profit and pay
 
         // 2.3 swap remain WBTC to WETH
         WBTC.transfer(address(uniswapV2Pair_WBTC_WETH), collateral_WBTC);
         uint amountOut_WETH = getAmountOut(collateral_WBTC, reserve_WBTC_Pool2, reserve_WETH_Pool2);
-        uniswapV2Pair_WBTC_WETH.swap(0, amountOut_WETH, address(this), ""); // pay back flash loan
+        uniswapV2Pair_WBTC_WETH.swap(0, amountOut_WETH, address(this), "");
     }
 }
