@@ -1,3 +1,8 @@
+code command ```docker build -t defi-mooc-lab-ans3 .
+ ```
+
+```docker run -e ALCHE_API="$YOUR ALCHEMY ETHEREUM MAINNET API" -it defi-mooc-lab-ans3 npm test
+ ```
 # Hands-on Exercise: Flash Loan based Liquidation
 
 ## Exercise
