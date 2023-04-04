@@ -259,6 +259,13 @@ contract LiquidationOperator is IUniswapV2Callee {
         assert(msg.sender == address(uniswapV2Pair_WBTC_USDT));
         (uint256 reserve_WBTC_Pool1, uint256 reserve_USDT_Pool1, ) = uniswapV2Pair_WBTC_USDT.getReserves(); // Pool1
         (uint256 reserve_WBTC_Pool2, uint256 reserve_WETH_Pool2, ) = uniswapV2Pair_WBTC_WETH.getReserves(); // Pool2
+        // console.log("uniswapV2Pair(%s): WBTC <> USDT", address(uniswapV2Pair_WBTC_USDT));
+        // console.log("reserve WBTC: %s", reserve_WBTC_Pool1);
+        // console.log("reserve USDT: %s", reserve_USDT_Pool1);
+
+        // console.log("uniswapV2Pair(%s): WBTC <> WETH", address(uniswapV2Pair_WBTC_WETH));
+        // console.log("reserve WBTC: %s", reserve_WBTC_Pool2);
+        // console.log("reserve WETH: %s", reserve_WETH_Pool2
         //console.log("2.0");
 
         // 2.1 liquidate the target user
